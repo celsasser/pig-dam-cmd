@@ -4,7 +4,8 @@
  * @license MIT (see project's LICENSE file)
  */
 
-import {createCommandUrn} from "../factory/urn";
+import {PigError} from "pig-dam-core";
+import {createCommandUrn, createTraceUrn} from "../factory/urn";
 import {CommandHistoryInterface, CommandInterface, CommandResponse} from "../types";
 
 /**
@@ -12,13 +13,21 @@ import {CommandHistoryInterface, CommandInterface, CommandResponse} from "../typ
  * this guy. But probably should.
  */
 export abstract class CommandBase implements CommandInterface {
-	readonly id: string;
+	public readonly id: string;
+	public readonly traceId: string;
 
 	/**
 	 * Construction
 	 */
-	constructor(id = createCommandUrn()) {
+	constructor({
+		id = createCommandUrn(),
+		traceId = createTraceUrn()
+	}: {
+		id?: string,
+		traceId?: string
+	} = {}) {
 		this.id = id;
+		this.traceId = traceId;
 	}
 
 	/********************
@@ -30,15 +39,20 @@ export abstract class CommandBase implements CommandInterface {
 	 */
 	get metadata(): object {
 		return {
-			id: this.id
+			id: this.id,
+			traceId: this.traceId
 		};
 	}
 
 	/**
 	 * Run this command
+	 * @throws {Error}
 	 * @abstract
 	 */
 	execute(history: CommandHistoryInterface): Promise<CommandResponse> {
-		throw new Error("must implement");
+		throw new PigError({
+			message: "must implement",
+			metadata: this.metadata
+		});
 	}
 }

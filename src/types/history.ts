@@ -3,7 +3,7 @@
  * Time: 10:03 PM
  * @license MIT (see project's LICENSE file)
  */
-import {CommandInterface, CommandResult} from "./command";
+import {CommandInterface, CommandResultType} from "./command";
 
 export interface CommandHistoryFilter {
 	type: typeof CommandInterface
@@ -13,10 +13,10 @@ export interface CommandHistoryInterface {
 	/**
 	 * Adds the results for <param>command</param> to the queue
 	 */
-	add(command: CommandInterface, result: CommandResult): void;
+	add(command: CommandInterface, result: CommandResultType): void;
 
 	/**
 	 * Gets the result of the last command.
 	 */
-	last(filter?: CommandHistoryFilter): CommandResult;
+	last(filter?: CommandHistoryFilter): CommandResultType;
 }

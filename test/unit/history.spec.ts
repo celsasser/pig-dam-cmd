@@ -5,13 +5,13 @@
  */
 
 import {CommandHistory} from "../../src/history";
-import {createTestCommand} from "../support/factory/command";
+import {createResolveTestCommand} from "../support/factory/command";
 
 describe("CommandHistory", function() {
 	describe("add", function() {
 		it("should properly store the input", function() {
 			const history = new CommandHistory();
-			history.add(createTestCommand(), "result");
+			history.add(createResolveTestCommand(), "result");
 			expect(history.last()).toStrictEqual("result");
 		});
 	});
@@ -25,7 +25,7 @@ describe("CommandHistory", function() {
 
 		it("should get last unfiltered result", function() {
 			const history = new CommandHistory();
-			history.add(createTestCommand(), "result");
+			history.add(createResolveTestCommand(), "result");
 			expect(history.last()).toStrictEqual("result");
 		});
 	});

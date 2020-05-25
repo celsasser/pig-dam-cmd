@@ -5,13 +5,19 @@
  */
 import {CommandHistoryInterface} from "./history";
 
-export type CommandResult = any;
+export type CommandExecuteType = (history: CommandHistoryInterface) => Promise<CommandResponse>;
+export type CommandResultType = any;
 
 export interface CommandInterface {
 	/**
 	 * Unique identifier of this command
 	 */
 	readonly id: string;
+
+	/**
+	 * Unique identifier of this command
+	 */
+	readonly traceId: string;
 
 	/**
 	 * Fundamental data that describes this object. To be included with logging and
@@ -22,10 +28,10 @@ export interface CommandInterface {
 	/**
 	 * Execute this command
 	 */
-	execute(history: CommandHistoryInterface): Promise<CommandResponse>;
+	execute: CommandExecuteType;
 }
 
 export interface CommandResponse {
 	commands?: CommandInterface[];
-	result?: CommandResult;
+	result?: CommandResultType;
 }

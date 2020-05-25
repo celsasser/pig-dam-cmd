@@ -11,12 +11,12 @@ import {
 	CommandHistoryFilter,
 	CommandHistoryInterface,
 	CommandInterface,
-	CommandResult
+	CommandResultType
 } from "./types";
 
 interface HistoryItem {
 	command: CommandInterface;
-	result: CommandResult;
+	result: CommandResultType;
 }
 
 export class CommandHistory implements CommandHistoryInterface {
@@ -28,19 +28,17 @@ export class CommandHistory implements CommandHistoryInterface {
 	/**
 	 * Adds the results for <param>command</param> to the queue
 	 */
-	public add(command: CommandInterface, result: CommandResult): void {
+	public add(command: CommandInterface, result: CommandResultType): void {
 		this.queue.push({command, result});
 	}
 
 	/**
 	 * Gets the result of the last command.
 	 */
-	public last(filter?: CommandHistoryFilter): CommandResult {
+	public last(filter?: CommandHistoryFilter): CommandResultType {
 		if(this.queue.length === 0) {
 			throw new PigError({
-				instance: this,
-				message: "history queue is empty",
-				method: this.last
+				message: "history queue is empty"
 			});
 		}
 		if(filter === undefined) {
@@ -59,9 +57,7 @@ export class CommandHistory implements CommandHistoryInterface {
 			return item.result;
 		} else {
 			throw new PigError({
-				instance: this,
-				message: `could not find history of type ${type}`,
-				method: this.findLastOfType
+				message: `could not find history of type ${type}`
 			});
 		}
 	}

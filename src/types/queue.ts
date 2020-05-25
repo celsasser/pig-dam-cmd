@@ -6,12 +6,15 @@
 import {CommandInterface} from "./command";
 
 export interface CommandQueueInterface {
-	readonly id: string;
-
 	/**
 	 * Adds this command or commands to the end of the queue
 	 */
 	add(command: CommandInterface|CommandInterface[]): void;
+
+	/**
+	 * Create a clone of this interface
+	 */
+	clone(): CommandQueueInterface;
 
 	/**
 	 * Inserts command or commands after specified <param>after</param>

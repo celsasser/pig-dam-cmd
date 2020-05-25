@@ -5,23 +5,21 @@
  */
 
 import {mutable, PigError} from "pig-dam-core";
-import {createQueueUrn} from "./factory/urn";
 import {CommandInterface, CommandQueueInterface} from "./types";
 
 /**
  * A command queue. A queue of commands with functionality to do what needs to get done.
  */
 export class CommandQueue implements CommandQueueInterface {
-	public readonly id: string;
-
 	private index: number = 0;
 	private readonly queue: CommandInterface[] = [];
 
 	/**
 	 * Construction
+	 * @param queue - for internal use only
 	 */
-	constructor(id = createQueueUrn()) {
-		this.id = id;
+	public constructor(queue: CommandInterface[] = []) {
+		this.queue = queue;
 	}
 
 	/********************
@@ -35,6 +33,13 @@ export class CommandQueue implements CommandQueueInterface {
 			? command
 			: [command];
 		mutable.array.concat(this.queue, commands);
+	}
+
+	/**
+	 * Returns a shallow clone of this fella
+	 */
+	clone(): CommandQueueInterface {
+		return new CommandQueue(this.queue.slice());
 	}
 
 	/**
@@ -64,11 +69,8 @@ export class CommandQueue implements CommandQueueInterface {
 			return this.queue[this.index++];
 		} else {
 			throw new PigError({
-				instance: this,
-				message: "no more commands",
-				method: this.next
+				message: "no more commands"
 			});
 		}
 	}
-
 }

@@ -5,13 +5,13 @@
  */
 
 import {CommandQueue} from "../../src/queue";
-import {createTestCommand} from "../support/factory/command";
+import {createResolveTestCommand} from "../support/factory/command";
 
 describe("CommandQueue", function() {
 	describe("add", function() {
 		it("should properly insert a single command", function() {
 			const queue = new CommandQueue();
-			const command = createTestCommand();
+			const command = createResolveTestCommand();
 			queue.add(command);
 			expect(queue.next()).toStrictEqual(command);
 		});
@@ -19,8 +19,8 @@ describe("CommandQueue", function() {
 		it("should properly insert multiple commands", function() {
 			const queue = new CommandQueue();
 			const commands = [
-				createTestCommand(),
-				createTestCommand()
+				createResolveTestCommand(),
+				createResolveTestCommand()
 			];
 			queue.add(commands);
 			expect(queue.next()).toStrictEqual(commands[0]);
@@ -28,11 +28,24 @@ describe("CommandQueue", function() {
 		});
 	});
 
+	describe("clone", function() {
+		it("should properly clone an instance", function() {
+			const instance = new CommandQueue();
+			instance.add(createResolveTestCommand());
+			const clone = instance.clone();
+			expect(instance).toEqual(clone);
+			// let's make sure the queues within are not one in the same
+			clone.add(createResolveTestCommand());
+			expect(clone).not.toEqual(instance);
+		});
+	});
+
+
 	describe("insert", function() {
 		it("should properly insert a single command", function() {
 			const queue = new CommandQueue();
-			const after = createTestCommand();
-			const insert = createTestCommand();
+			const after = createResolveTestCommand();
+			const insert = createResolveTestCommand();
 			queue.add(after);
 			queue.insert(insert, after);
 			expect(queue.next()).toStrictEqual(after);
@@ -41,10 +54,10 @@ describe("CommandQueue", function() {
 
 		it("should properly insert multiple commands", function() {
 			const queue = new CommandQueue();
-			const after = createTestCommand();
+			const after = createResolveTestCommand();
 			const insert =[
-				createTestCommand(),
-				createTestCommand()
+				createResolveTestCommand(),
+				createResolveTestCommand()
 			]
 			queue.add(after);
 			queue.insert(insert, after);
@@ -62,7 +75,7 @@ describe("CommandQueue", function() {
 
 		it("should return true if there is a next", function() {
 			const queue = new CommandQueue();
-			queue.add(createTestCommand());
+			queue.add(createResolveTestCommand());
 			expect(queue.isNext()).toEqual(true);
 		});
 	});

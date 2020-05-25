@@ -3,12 +3,31 @@
  * Time: 1:01 AM
  * @license MIT (see project's LICENSE file)
  */
+
 import {createUrn} from "pig-dam-core";
 
+/**
+ * Our convention for urns in the pig-dam-cmd module is: "urn:dam:<type>:<nss>"
+ */
+
+/**
+ * Creates a unique id for a command
+ */
 export function createCommandUrn(): string {
-	return createUrn({path: "dam:cmd:command"});
+	return createUrn({path: "dam:command"});
 }
 
-export function createQueueUrn(): string {
-	return createUrn({path: "dam:cmd:queue"});
+/**
+ * Create a unique id for a command processor
+ */
+export function createCommandProcessorUrn(): string {
+	return createUrn({path: "dam:process"});
 }
+
+/**
+ * Creates a unique trace-id
+ */
+export function createTraceUrn(): string {
+	return createUrn({path: "dam:trace"});
+}
+
