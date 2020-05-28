@@ -36,6 +36,7 @@ export abstract class CommandBase implements CommandInterface {
 	/**
 	 * Fundamental data that describes this object. To be included with logging and
 	 * as error details.  Should not include recursive references.
+	 * @immutable
 	 */
 	get metadata(): object {
 		return {

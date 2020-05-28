@@ -13,25 +13,27 @@ describe("command.proxy", function() {
 		result: "result"
 	});
 
-	describe("construction", function() {
-		it("should properly create an instance", function() {
-			const instance = new CommandProxy({execute});
-			expect(instance.execute).toEqual(execute);
-			expect(instance.id).toMatch(/^urn:dam:command:/);
-			expect(instance.traceId).toMatch(/^urn:dam:trace:/);
+	describe("CommandProxy", function() {
+		describe("construction", function() {
+			it("should properly create an instance", function() {
+				const instance = new CommandProxy({execute});
+				expect(instance.execute).toEqual(execute);
+				expect(instance.id).toMatch(/^urn:dam:command:/);
+				expect(instance.traceId).toMatch(/^urn:dam:trace:/);
+			});
 		});
-	});
 
-	describe("execute", function() {
-		it("should properly execute the execute param", async function() {
-			const instance = new CommandProxy({execute});
-			const history = new CommandHistory();
-			return instance.execute(history)
-				.then(response => {
-					expect(response).toEqual({
-						result: "result"
+		describe("execute", function() {
+			it("should properly execute the execute param", async function() {
+				const instance = new CommandProxy({execute});
+				const history = new CommandHistory();
+				return instance.execute(history)
+					.then(response => {
+						expect(response).toEqual({
+							result: "result"
+						});
 					});
-				});
+			});
 		});
 	});
 });

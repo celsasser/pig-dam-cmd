@@ -3,10 +3,12 @@
  * Time: 10:03 PM
  * @license MIT (see project's LICENSE file)
  */
+
+import {CommandBase} from "../command/base";
 import {CommandInterface, CommandResultType} from "./command";
 
 export interface CommandHistoryFilter {
-	type: typeof CommandInterface
+	type: typeof CommandBase
 };
 
 export interface CommandHistoryInterface {

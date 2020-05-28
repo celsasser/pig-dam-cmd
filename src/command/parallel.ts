@@ -21,7 +21,7 @@ export class CommandParallelExecution extends CommandBase {
 	 * Construction
 	 */
 	constructor({commands, id, traceId}: {
-		commands: CommandInterface,
+		commands: CommandInterface[],
 		id?: string,
 		traceId?: string
 	}) {
