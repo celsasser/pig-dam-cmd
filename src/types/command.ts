@@ -3,12 +3,10 @@
  * Time: 10:00 PM
  * @license MIT (see project's LICENSE file)
  */
-import {CommandHistoryInterface} from "./history";
 
-export type CommandExecuteType = (history: CommandHistoryInterface) => Promise<CommandResponse>;
-export type CommandResultType = any;
+export type CommandExecuteType<T> = () => Promise<T>;
 
-export interface CommandInterface {
+export interface CommandInterface<T> {
 	/**
 	 * Unique identifier of this command
 	 */
@@ -28,10 +26,6 @@ export interface CommandInterface {
 	/**
 	 * Execute this command
 	 */
-	execute: CommandExecuteType;
+	execute: CommandExecuteType<T>;
 }
 
-export interface CommandResponse {
-	commands?: CommandInterface[];
-	result?: CommandResultType;
-}

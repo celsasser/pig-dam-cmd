@@ -6,82 +6,26 @@
 
 
 import {getTypeName, PigError} from "pig-dam-core";
-import {CommandHistory} from "./history";
-import {
-	CommandInterface,
-	CommandQueueInterface,
-	CommandResponse,
-	CommandResultType
-} from "./types";
+import {CommandInterface} from "./types";
 
 /**
- * This guy processes a queue of commands and returns the successful results
- * or the failure.
+ * He's a very simple guy who executes the command and captures informative information
+ * should he fail in one way or another
  */
-export class CommandProcessor {
-	private readonly queue: CommandQueueInterface;
-	private readonly history: CommandHistory;
-
-	/**
-	 * Construction
-	 */
-	constructor(queue: CommandQueueInterface) {
-		this.queue = queue.clone();
-		this.history = new CommandHistory();
-	}
-
-	/********************
-	 * Public Interface
-	 ********************/
-	/**
-	 * Processes all commands in the queue and when done returns the results
-	 * @throws {PigError}
-	 */
-	public async execute(): Promise<CommandResultType> {
-		let result: CommandResultType;
-		while(this.queue.isNext()) {
-			result = await this.executeCommand(this.queue.next());
-		}
-		return result;
-	}
-
-	/********************
-	 * Private Interface
-	 ********************/
-	private async executeCommand(command: CommandInterface): Promise<CommandResultType> {
-		try {
-			const response = await command.execute(this.history);
-			this.processCommandResponse(command, response);
-			return response.result;
-		} catch(error) {
-			// we want to make sure we capture the details of the command that failed.
-			// the actual error will lurk within. We will need to provide some good support
-			// for being able to dive into and out of an error
-			throw new PigError({
-				error,
-				message: `${getTypeName(command)}.execute() failed - ${error.message}`,
-				metadata: {
-					command: getTypeName(command),
-					details: command.metadata
-				}
-			});
-		}
-	}
-
-	/**
-	 * Processes the commands response
-	 * @throws {Error} only for unexpected conditions
-	 */
-	private processCommandResponse(command: CommandInterface, response: CommandResponse): void {
-		if(response.commands !== undefined) {
-			this.queue.insert(response.commands, command);
-			if(response.result!==undefined) {
-				throw new PigError({
-					message: "unexpected result with command expansion"
-				});
+export async function executeCommand<T>(command: CommandInterface<T>): Promise<T> {
+	try {
+		return await command.execute();
+	} catch(error) {
+		// we want to make sure we capture the details of the command that failed.
+		// the actual error will lurk within. We will need to provide some good support
+		// for being able to dive into and out of an error
+		throw new PigError({
+			error,
+			message: `${getTypeName(command)}.execute() failed - ${error.message}`,
+			metadata: {
+				command: getTypeName(command),
+				details: command.metadata
 			}
-		} else {
-			this.history.add(command, response.result);
-		}
+		});
 	}
 }

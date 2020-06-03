@@ -5,13 +5,10 @@
  */
 
 import {CommandProxy} from "../../../src/command/proxy";
-import {CommandHistory} from "../../../src/history";
 import {CommandExecuteType} from "../../../src/types";
 
 describe("command.proxy", function() {
-	const execute: CommandExecuteType = jest.fn().mockResolvedValue({
-		result: "result"
-	});
+	const execute: CommandExecuteType<string> = jest.fn().mockResolvedValue("result");
 
 	describe("CommandProxy", function() {
 		describe("construction", function() {
@@ -26,12 +23,9 @@ describe("command.proxy", function() {
 		describe("execute", function() {
 			it("should properly execute the execute param", async function() {
 				const instance = new CommandProxy({execute});
-				const history = new CommandHistory();
-				return instance.execute(history)
+				return instance.execute()
 					.then(response => {
-						expect(response).toEqual({
-							result: "result"
-						});
+						expect(response).toEqual("result");
 					});
 			});
 		});

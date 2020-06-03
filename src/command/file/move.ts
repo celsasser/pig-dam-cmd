@@ -4,17 +4,14 @@
  * @license MIT (see project's LICENSE file)
  */
 
-import {move, readdir, MoveOptions, ensureDir} from "fs-extra";
-import {
-	join as joinPath
-} from "path";
-import {CommandHistoryInterface, CommandResponse} from "../../types";
+import {ensureDir, move, MoveOptions, readdir} from "fs-extra";
+import {join as joinPath} from "path";
 import {CommandBase} from "../base";
 
 /**
  * Moves from one path to another
  */
-export class CommandMovePath extends CommandBase {
+export class CommandMovePath extends CommandBase<void> {
 	public readonly options?: MoveOptions;
 	public readonly pathFrom: string;
 	public readonly pathTo: string;
@@ -36,24 +33,22 @@ export class CommandMovePath extends CommandBase {
 	}
 
 	get metadata(): object {
-		return {
+		return Object.assign(super.metadata, {
 			options: this.options,
 			pathFrom: this.pathFrom,
-			pathTo: this.pathTo,
-			...super.metadata
-		};
+			pathTo: this.pathTo
+		});
 	}
 
-	async execute(history: CommandHistoryInterface): Promise<CommandResponse> {
+	async execute(): Promise<void> {
 		if(this.pathFrom !== this.pathTo) {
 			if(this.pathTo.startsWith(this.pathFrom)) {
 				// path-from is nested with path-to. We do some fancy dancing
 				await this.moveNested();
 			} else {
-				await move(this.pathFrom, this.pathTo, this.options)
+				await move(this.pathFrom, this.pathTo, this.options);
 			}
 		}
-		return {};
 	}
 
 	/********************
@@ -62,13 +57,13 @@ export class CommandMovePath extends CommandBase {
 	/**
 	 * Moves this directory into a directory that is within `pathFrom`
 	 */
-	private async moveNested(): void {
+	private async moveNested(): Promise<void> {
 		const from = (await readdir(this.pathFrom)).map(name => ({
 			name,
 			path: joinPath(this.pathFrom, name)
 		}));
 		await ensureDir(this.pathTo);
-		for(const {name, path} in from) {
+		for(const {name, path} of from) {
 			// we don't want to move this file if he is the subdirectory we are targeting. Get it? Got it? Good!
 			if(!this.pathTo.startsWith(path)) {
 				await move(path, joinPath(this.pathTo, name));

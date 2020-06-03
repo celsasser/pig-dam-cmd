@@ -8,34 +8,27 @@ import {
 	CommandFilePathExists,
 	CommandFilePathNotExists
 } from "../../../../src/command/file/exists";
-import {CommandHistory} from "../../../../src/history";
 
 describe("command.file.exists", function() {
 	describe("CommandFilePathExists", function() {
 		describe("execute", function() {
 			it("should return true if it does", async function() {
-				const history = new CommandHistory();
 				const instance = new CommandFilePathExists({
 					path: __filename
 				});
-				return instance.execute(history)
+				return instance.execute()
 					.then(result => {
-						expect(result).toEqual({
-							result: true
-						});
+						expect(result).toEqual(true);
 					});
 			});
 
 			it("should return false if it does not", async function() {
-				const history = new CommandHistory();
 				const instance = new CommandFilePathExists({
 					path: `${__dirname}/bordertown`
 				});
-				return instance.execute(history)
+				return instance.execute()
 					.then(result => {
-						expect(result).toEqual({
-							result: false
-						});
+						expect(result).toEqual(false);
 					});
 			});
 		});
@@ -44,28 +37,22 @@ describe("command.file.exists", function() {
 	describe("CommandFilePathNotExists", function() {
 		describe("execute", function() {
 			it("should return false if it does", async function() {
-				const history = new CommandHistory();
 				const instance = new CommandFilePathNotExists({
 					path: __filename
 				});
-				return instance.execute(history)
+				return instance.execute()
 					.then(result => {
-						expect(result).toEqual({
-							result: false
-						});
+						expect(result).toEqual(false);
 					});
 			});
 
 			it("should return true if it does not", async function() {
-				const history = new CommandHistory();
 				const instance = new CommandFilePathNotExists({
 					path: `${__dirname}/bordertown`
 				});
-				return instance.execute(history)
+				return instance.execute()
 					.then(result => {
-						expect(result).toEqual({
-							result: true
-						});
+						expect(result).toEqual(true);
 					});
 			});
 		});

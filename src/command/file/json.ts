@@ -5,32 +5,29 @@
  */
 
 import {readJson, writeJson} from "fs-extra";
-import {CommandHistoryInterface, CommandResponse} from "../../types";
 import {CommandFilePathBase} from "./base";
 
 /**
  * Loads file at path and parses as json
  */
-export class CommandReadJsonFile extends CommandFilePathBase {
-	async execute(history: CommandHistoryInterface): Promise<CommandResponse> {
-		return {
-			result: await readJson(this.path)
-		};
+export class CommandReadJsonFile<T = any> extends CommandFilePathBase<T> {
+	async execute(): Promise<T> {
+		return readJson(this.path);
 	}
 }
 
 /**
  * Writes object as json to specified path
  */
-export class CommandWriteJsonFile extends CommandFilePathBase {
-	public readonly object: any;
+export class CommandWriteJsonFile<T = any> extends CommandFilePathBase<void> {
+	public readonly object: T;
 
 	/**
 	 * Constructor
 	 */
 	constructor({id, object, path, traceId}: {
 		id?: string,
-		object: any,
+		object: T,
 		path: string,
 		traceId?: string
 	}) {
@@ -39,15 +36,12 @@ export class CommandWriteJsonFile extends CommandFilePathBase {
 	}
 
 	get metadata(): object {
-		return {
-			object: this.object,
-			...super.metadata
-		};
+		return Object.assign(super.metadata, {
+			object: this.object
+		});
 	}
 
-	async execute(history: CommandHistoryInterface): Promise<CommandResponse> {
-		return {
-			result: await writeJson(this.path, this.object)
-		};
+	async execute(): Promise<void> {
+		return writeJson(this.path, this.object);
 	}
 }

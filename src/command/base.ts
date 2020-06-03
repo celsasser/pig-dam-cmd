@@ -6,13 +6,13 @@
 
 import {PigError} from "pig-dam-core";
 import {createCommandUrn, createTraceUrn} from "../factory/urn";
-import {CommandHistoryInterface, CommandInterface, CommandResponse} from "../types";
+import {CommandInterface} from "../types";
 
 /**
  * Base class for commands. We do use interfaces so you don't have to inherit from
  * this guy. But probably should.
  */
-export abstract class CommandBase implements CommandInterface {
+export abstract class CommandBase<T> implements CommandInterface<T> {
 	public readonly id: string;
 	public readonly traceId: string;
 
@@ -50,10 +50,36 @@ export abstract class CommandBase implements CommandInterface {
 	 * @throws {Error}
 	 * @abstract
 	 */
-	execute(history: CommandHistoryInterface): Promise<CommandResponse> {
+	execute(): Promise<T> {
 		throw new PigError({
 			message: "must implement",
 			metadata: this.metadata
+		});
+	}
+}
+
+
+/**
+ * Base class for running one or more commands from within a command
+ */
+export abstract class CommandQueueBase<T> extends CommandBase<T[]> {
+	public readonly commands: CommandInterface<T>[];
+
+	/**
+	 * Construction
+	 */
+	constructor({commands, id, traceId}: {
+		commands: CommandInterface<T>[],
+		id?: string,
+		traceId?: string
+	}) {
+		super({id, traceId});
+		this.commands = commands;
+	}
+
+	get metadata(): object {
+		return Object.assign(super.metadata, {
+			commands: this.commands.map(command => command.metadata)
 		});
 	}
 }

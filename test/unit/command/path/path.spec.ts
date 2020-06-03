@@ -6,7 +6,6 @@
 
 import * as fs from "fs-extra";
 import {CommandEnsureNotPath, CommandEnsurePath} from "../../../../src/command/file/path";
-import {CommandHistory} from "../../../../src/history";
 
 jest.mock("fs-extra");
 const mockedFs = fs as jest.Mocked<typeof fs>;
@@ -15,19 +14,16 @@ describe("command.file.path", function() {
 	afterEach(function() {
 		jest.resetAllMocks();
 	});
-	
+
 	describe("CommandEnsurePath", function() {
 		describe("execute", function() {
 			it("should correctly call ensureDir", async function() {
-				const history = new CommandHistory();
 				const instance = new CommandEnsurePath({
 					path: "path"
 				});
-				return instance.execute(history)
+				return instance.execute()
 					.then(result => {
-						expect(result).toEqual({
-							result: undefined
-						});
+						expect(result).toBeUndefined();
 						expect(mockedFs.ensureDir).toHaveBeenCalledWith("path");
 					});
 			});
@@ -37,32 +33,26 @@ describe("command.file.path", function() {
 	describe("CommandEnsureNotPath", function() {
 		describe("execute", function() {
 			it("should call remove if it does exist", async function() {
-				const history = new CommandHistory();
 				const instance = new CommandEnsureNotPath({
 					path: "path"
 				});
 				mockedFs.pathExists.mockResolvedValue(true as never);
-				return instance.execute(history)
+				return instance.execute()
 					.then(result => {
-						expect(result).toEqual({
-							result: undefined
-						});
+						expect(result).toBeUndefined();
 						expect(mockedFs.pathExists).toHaveBeenCalledWith("path");
 						expect(mockedFs.remove).toHaveBeenCalledWith("path");
 					});
 			});
 
 			it("should not call remove if it does not exist", async function() {
-				const history = new CommandHistory();
 				const instance = new CommandEnsureNotPath({
 					path: "path"
 				});
 				mockedFs.pathExists.mockResolvedValue(false as never);
-				return instance.execute(history)
+				return instance.execute()
 					.then(result => {
-						expect(result).toEqual({
-							result: undefined
-						});
+						expect(result).toBeUndefined();
 						expect(mockedFs.pathExists).toHaveBeenCalledWith("path");
 						expect(mockedFs.remove).not.toHaveBeenCalled();
 					});

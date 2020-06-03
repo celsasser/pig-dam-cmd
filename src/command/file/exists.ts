@@ -5,17 +5,14 @@
  */
 
 import {pathExists} from "fs-extra";
-import {CommandHistoryInterface, CommandResponse} from "../../types";
 import {CommandFilePathBase} from "./base";
 
 /**
  * Returns true if the path exists and false if it doesn't
  */
-export class CommandFilePathExists extends CommandFilePathBase {
-	async execute(history: CommandHistoryInterface): Promise<CommandResponse> {
-		return {
-			result: await pathExists(this.path)
-		};
+export class CommandFilePathExists extends CommandFilePathBase<boolean> {
+	async execute(): Promise<boolean> {
+		return pathExists(this.path);
 	}
 }
 
@@ -23,10 +20,7 @@ export class CommandFilePathExists extends CommandFilePathBase {
  * Inverts the result of CommandFilePathExists
  */
 export class CommandFilePathNotExists extends CommandFilePathExists {
-	async execute(history: CommandHistoryInterface): Promise<CommandResponse> {
-		const response = await super.execute(history);
-		return {
-			result: !response.result
-		};
+	async execute(): Promise<boolean> {
+		return !(await super.execute());
 	}
 }

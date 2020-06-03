@@ -9,21 +9,17 @@ import {
 	CommandReadJsonFile,
 	CommandWriteJsonFile
 } from "../../../../src/command/file/json";
-import {CommandHistory} from "../../../../src/history";
 
 describe("command.file.json", function() {
 	describe("CommandReadJsonFile", function() {
 		describe("execute", function() {
 			it("should properly load a json file", async function() {
-				const history = new CommandHistory();
 				const instance = new CommandReadJsonFile({
 					path: `${__dirname}/input/test.json`
 				});
-				return instance.execute(history)
+				return instance.execute()
 					.then(result => {
-						expect(result).toEqual({
-							result: require("./input/test.json")
-						});
+						expect(result).toEqual(require("./input/test.json"));
 					});
 			});
 		});
@@ -38,11 +34,10 @@ describe("command.file.json", function() {
 		it("should attempt to write specified object", function() {
 			const object = {};
 			const path = `${__dirname}/input/test.json`;
-			const history = new CommandHistory();
 			const instance = new CommandWriteJsonFile({object, path});
-			return instance.execute(history)
+			return instance.execute()
 				.then(result => {
-					expect(result).toEqual({});
+					expect(result).toBeUndefined();
 					expect(fs.writeJson).toHaveBeenCalledWith(path, object);
 				});
 		});

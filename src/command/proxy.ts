@@ -11,9 +11,9 @@ import {CommandBase} from "./base";
  * It proxies a promise. There will be times when we want to do stuff but don't want to create
  * commands for them. This is your man. You must supply the guy who will do the work.
  */
-export class CommandProxy extends CommandBase {
+export class CommandProxy<T> extends CommandBase<T> {
 	constructor({execute, id, traceId}: {
-		execute: CommandExecuteType,
+		execute: CommandExecuteType<T>,
 		id?: string,
 		traceId?: string
 	}) {

@@ -5,26 +5,32 @@
  */
 
 import {CommandProxy} from "../../../src/command/proxy";
-import {CommandExecuteType, CommandInterface, CommandResponse} from "../../../src/types";
+import {CommandExecuteType} from "../../../src/types";
 
-export const defaultExecuteResolveValue: CommandResponse = {
-	result: "success"
-};
+export const defaultExecuteResolveValue: string = "success";
 export const defaultExecuteRejectValue: Error = new Error("failed");
 
-export const defaultExecuteResolve: CommandExecuteType = () => Promise.resolve(defaultExecuteResolveValue);
-export const defaultExecuteReject: CommandExecuteType = () => Promise.reject(defaultExecuteRejectValue);
+export const defaultExecuteResolve: CommandExecuteType<string> = () => Promise.resolve(defaultExecuteResolveValue);
+export const defaultExecuteReject: CommandExecuteType<void> = () => Promise.reject(defaultExecuteRejectValue);
 
 /**
  * Creates an instance of our internal test command
  */
-export function createResolveTestCommand(execute = defaultExecuteResolve): CommandInterface {
-	return new CommandProxy({execute});
+export function createResolveTestCommand(execute: CommandExecuteType<string> = defaultExecuteResolve): CommandProxy<string> {
+	return new CommandProxy<string>({
+		execute,
+		id: "urn:dam:command:id",
+		traceId: "urn:dam:trace:id"
+	});
 }
 
 /**
  * Creates an instance of our internal test command
  */
-export function createRejectTestCommand(execute = defaultExecuteReject): CommandInterface {
-	return new CommandProxy({execute});
+export function createRejectTestCommand(execute: CommandExecuteType<void> = defaultExecuteReject): CommandProxy<void> {
+	return new CommandProxy({
+		execute,
+		id: "urn:dam:command:id",
+		traceId: "urn:dam:trace:id"
+	});
 }

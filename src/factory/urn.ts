@@ -18,13 +18,6 @@ export function createCommandUrn(): string {
 }
 
 /**
- * Create a unique id for a command processor
- */
-export function createCommandProcessorUrn(): string {
-	return createUrn({path: "dam:process"});
-}
-
-/**
  * Creates a unique trace-id
  */
 export function createTraceUrn(): string {

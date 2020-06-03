@@ -9,7 +9,7 @@ import {CommandBase} from "../base";
 /**
  * Base class for all file commands that operate on a single path
  */
-export abstract class CommandFilePathBase extends CommandBase {
+export abstract class CommandFilePathBase<T> extends CommandBase<T> {
 	public readonly path: string;
 
 	/**
@@ -25,9 +25,8 @@ export abstract class CommandFilePathBase extends CommandBase {
 	}
 
 	get metadata(): object {
-		return {
-			path: this.path,
-			...super.metadata
-		};
+		return Object.assign(super.metadata, {
+			path: this.path
+		});
 	}
 }
