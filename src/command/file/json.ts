@@ -11,7 +11,7 @@ import {CommandFilePathBase} from "./base";
  * Loads file at path and parses as json
  */
 export class CommandReadJsonFile<T = any> extends CommandFilePathBase<T> {
-	async execute(): Promise<T> {
+	protected async _execute(): Promise<T> {
 		return readJson(this.path);
 	}
 }
@@ -41,7 +41,10 @@ export class CommandWriteJsonFile<T = any> extends CommandFilePathBase<void> {
 		});
 	}
 
-	async execute(): Promise<void> {
+	/********************
+	 * Protected Interface
+	 ********************/
+	protected async _execute(): Promise<void> {
 		return writeJson(this.path, this.object);
 	}
 }

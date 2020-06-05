@@ -4,7 +4,7 @@
  * @license MIT (see project's LICENSE file)
  */
 
-import {CommandBase, CommandQueueBase} from "../../../src/command/base";
+import {CommandBase, CommandQueueBase} from "../../../src/command";
 import {CommandInterface} from "../../../src/types";
 import {createResolveTestCommand} from "../../support/factory/command";
 
@@ -47,10 +47,12 @@ describe("command.base", function() {
 		});
 
 		describe("execute", function() {
-			it("should throw an exception", function() {
+			it("should run _execute", function() {
 				const instance = createInstance();
-				expect(instance.execute.bind(instance))
-					.toThrowError("must implement");
+				// @ts-ignore
+				instance._execute = jest.fn().mockResolvedValue("success");
+				expect(instance.execute())
+					.resolves.toEqual("success");
 			});
 		});
 	});

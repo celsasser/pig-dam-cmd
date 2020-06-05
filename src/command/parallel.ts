@@ -18,7 +18,7 @@ export class CommandParallelExecution<T = any> extends CommandQueueBase<T> {
 	 *    ...
 	 * ]
 	 */
-	execute(): Promise<T[]> {
+	protected _execute(): Promise<T[]> {
 		const promises = this.commands.map(command => command.execute());
 		return Promise.all(promises);
 	}

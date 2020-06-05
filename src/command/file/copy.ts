@@ -39,7 +39,10 @@ export class CommandCopyPath extends CommandBase<void> {
 		});
 	}
 
-	async execute(): Promise<void> {
+	/********************
+	 * Protected Interface
+	 ********************/
+	protected async _execute(): Promise<void> {
 		return copy(this.pathFrom, this.pathTo, this.options);
 	}
 }

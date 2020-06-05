@@ -12,7 +12,7 @@ import {CommandFilePathBase} from "./base";
  * Creates the directory if it does not exist
  */
 export class CommandEnsurePath extends CommandFilePathBase<void> {
-	async execute(): Promise<void> {
+	protected async _execute(): Promise<void> {
 		return ensureDir(this.path);
 	}
 }
@@ -21,7 +21,7 @@ export class CommandEnsurePath extends CommandFilePathBase<void> {
  * Removes the directory if it does exist
  */
 export class CommandEnsureNotPath extends CommandFilePathBase<void> {
-	async execute(): Promise<void> {
+	protected async _execute(): Promise<void> {
 		const exists = await pathExists(this.path);
 		if(exists) {
 			await remove(this.path);
@@ -33,7 +33,7 @@ export class CommandEnsureNotPath extends CommandFilePathBase<void> {
  * Removes the specified path
  */
 export class CommandRemovePath extends CommandFilePathBase<void> {
-	async execute(): Promise<void> {
+	protected async _execute(): Promise<void> {
 		return remove(this.path);
 	}
 }

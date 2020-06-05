@@ -4,7 +4,7 @@
  * @license MIT (see project's LICENSE file)
  */
 
-import {CommandParallelExecution} from "../../../src/command/parallel";
+import {CommandParallelExecution} from "../../../src/command";
 import {
 	createRejectTestCommand,
 	createResolveTestCommand,
@@ -34,7 +34,8 @@ describe("command.parallel", function() {
 			];
 			const instance = new CommandParallelExecution({commands});
 			return expect(instance.execute())
-				.rejects.toThrowError(defaultExecuteRejectValue);
+				.rejects
+				.toThrowError(`CommandParallelExecution.execute() failed - CommandProxy.execute() failed - ${defaultExecuteRejectValue}`);
 		});
 	});
 });

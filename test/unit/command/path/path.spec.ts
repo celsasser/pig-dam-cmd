@@ -5,7 +5,7 @@
  */
 
 import * as fs from "fs-extra";
-import {CommandEnsureNotPath, CommandEnsurePath} from "../../../../src/command/file/path";
+import {CommandEnsureNotPath, CommandEnsurePath} from "../../../../src/command";
 
 jest.mock("fs-extra");
 const mockedFs = fs as jest.Mocked<typeof fs>;

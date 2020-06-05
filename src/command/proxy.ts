@@ -12,12 +12,14 @@ import {CommandBase} from "./base";
  * commands for them. This is your man. You must supply the guy who will do the work.
  */
 export class CommandProxy<T> extends CommandBase<T> {
+	protected _execute: CommandExecuteType<T>;
+
 	constructor({execute, id, traceId}: {
 		execute: CommandExecuteType<T>,
 		id?: string,
 		traceId?: string
 	}) {
 		super({id, traceId});
-		this.execute = execute;
+		this._execute = execute;
 	}
 }

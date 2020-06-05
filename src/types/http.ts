@@ -9,12 +9,9 @@ export enum HttpMethod {
 	DELETE = "DELETE",
 	GET = "GET",
 	HEAD = "HEAD",
-	LINK = "LINK",
 	OPTIONS = "OPTIONS",
-	PATCH = "PATCH",
 	POST = "POST",
-	PUT = "PUT",
-	UNLINK = "UNLINK"
+	PUT = "PUT"
 }
 
 export enum HttpResponseType {
@@ -41,6 +38,11 @@ export type HttpParamsType = {
 };
 
 /**
+ * So your mom won't wait up watching the late late show not knowing where you are.
+ */
+export type HttpProgressHandler = (event: ProgressEvent) => void;
+
+/**
  * Describes a request.
  */
 export interface HttpRequest {
@@ -48,16 +50,17 @@ export interface HttpRequest {
 	headers?: HttpHeadersType;
 	method: HttpMethod;
 	params?: HttpParamsType;
-	responseType?: HttpResponseType,
+	responseType?: HttpResponseType;
 	timeout?: number;
 	url: string;
 
-	onUploadProgress?: (event: ProgressEvent) => void;
-	onDownloadProgress?: (event: ProgressEvent) => void;
+	onDownloadProgress?: HttpProgressHandler;
+	onUploadProgress?: HttpProgressHandler;
 }
 
 export interface HttpResponse<T = any> {
 	data: T;
+	request: HttpRequest;
 	status: number;
 	statusText: string;
 	headers: any;

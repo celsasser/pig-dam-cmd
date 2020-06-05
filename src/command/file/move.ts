@@ -40,7 +40,10 @@ export class CommandMovePath extends CommandBase<void> {
 		});
 	}
 
-	async execute(): Promise<void> {
+	/*****************************
+	 * Protected/Private Interface
+	 ****************************/
+	protected async _execute(): Promise<void> {
 		if(this.pathFrom !== this.pathTo) {
 			if(this.pathTo.startsWith(this.pathFrom)) {
 				// path-from is nested with path-to. We do some fancy dancing
@@ -51,9 +54,6 @@ export class CommandMovePath extends CommandBase<void> {
 		}
 	}
 
-	/********************
-	 * Private Interface
-	 ********************/
 	/**
 	 * Moves this directory into a directory that is within `pathFrom`
 	 */

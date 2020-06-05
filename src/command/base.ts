@@ -4,8 +4,8 @@
  * @license MIT (see project's LICENSE file)
  */
 
-import {PigError} from "pig-dam-core";
-import {createCommandUrn, createTraceUrn} from "../factory/urn";
+import {getTypeName, PigError} from "pig-dam-core";
+import {createCommandUrn, createTraceUrn} from "../factory";
 import {CommandInterface} from "../types";
 
 /**
@@ -38,7 +38,7 @@ export abstract class CommandBase<T> implements CommandInterface<T> {
 	 * as error details.  Should not include recursive references.
 	 * @immutable
 	 */
-	get metadata(): object {
+	public get metadata(): object {
 		return {
 			id: this.id,
 			traceId: this.traceId
@@ -46,16 +46,30 @@ export abstract class CommandBase<T> implements CommandInterface<T> {
 	}
 
 	/**
-	 * Run this command
-	 * @throws {Error}
-	 * @abstract
+	 * Run this command. I want every single execution to go through the base.
+	 * Why? Because I want to be uniform in how we capture and report errors. I want
+	 * every one of them to identify the command and associated metadata. I don't
+	 * want to miss anything.
+	 * @throws {PigError}
+	 * @final
 	 */
-	execute(): Promise<T> {
-		throw new PigError({
-			message: "must implement",
-			metadata: this.metadata
-		});
+	public async execute(): Promise<T> {
+		try {
+			return await this._execute();
+		} catch(error) {
+			throw new PigError({
+				error,
+				message: `${getTypeName(this)}.execute() failed - ${error.message}`,
+				metadata: this.metadata
+			});
+		}
 	}
+
+	/********************
+	 * Protected Interface
+	 ********************/
+	protected abstract _execute(): Promise<T>;
+
 }
 
 

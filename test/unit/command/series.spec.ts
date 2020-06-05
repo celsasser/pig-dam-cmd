@@ -4,7 +4,7 @@
  * @license MIT (see project's LICENSE file)
  */
 
-import {CommandSeriesExecution} from "../../../src/command/series";
+import {CommandSeriesExecution} from "../../../src/command";
 import {
 	createRejectTestCommand,
 	createResolveTestCommand,
@@ -34,7 +34,8 @@ describe("command.series", function() {
 			];
 			const instance = new CommandSeriesExecution({commands});
 			return expect(instance.execute())
-				.rejects.toThrowError(defaultExecuteRejectValue);
+				.rejects
+				.toThrowError(`CommandSeriesExecution.execute() failed - CommandProxy.execute() failed - ${defaultExecuteRejectValue}`);
 		});
 	});
 });

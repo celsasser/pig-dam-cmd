@@ -5,10 +5,7 @@
  */
 
 import * as fs from "fs-extra";
-import {
-	CommandReadJsonFile,
-	CommandWriteJsonFile
-} from "../../../../src/command/file/json";
+import {CommandReadJsonFile, CommandWriteJsonFile} from "../../../../src/command";
 
 describe("command.file.json", function() {
 	describe("CommandReadJsonFile", function() {

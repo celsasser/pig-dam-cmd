@@ -10,6 +10,9 @@ import {CommandQueueBase} from "./base";
  * Runs 1 or more commands in series.
  */
 export class CommandSeriesExecution<T = any> extends CommandQueueBase<T> {
+	/********************
+	 * Protected Interface
+	 ********************/
 	/**
 	 * Runs the commands in series and if all goes well then returns their results
 	 * Successful response: [
@@ -18,7 +21,7 @@ export class CommandSeriesExecution<T = any> extends CommandQueueBase<T> {
 	 *    ...
 	 * ]
 	 */
-	async execute(): Promise<T[]> {
+	protected async _execute(): Promise<T[]> {
 		const result: T[] = [];
 		for(const command of this.commands) {
 			result.push(await command.execute());

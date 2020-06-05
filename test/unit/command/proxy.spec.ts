@@ -4,7 +4,7 @@
  * @license MIT (see project's LICENSE file)
  */
 
-import {CommandProxy} from "../../../src/command/proxy";
+import {CommandProxy} from "../../../src/command";
 import {CommandExecuteType} from "../../../src/types";
 
 describe("command.proxy", function() {
@@ -14,7 +14,8 @@ describe("command.proxy", function() {
 		describe("construction", function() {
 			it("should properly create an instance", function() {
 				const instance = new CommandProxy({execute});
-				expect(instance.execute).toEqual(execute);
+				// @ts-ignore
+				expect(instance._execute).toEqual(execute);
 				expect(instance.id).toMatch(/^urn:dam:command:/);
 				expect(instance.traceId).toMatch(/^urn:dam:trace:/);
 			});

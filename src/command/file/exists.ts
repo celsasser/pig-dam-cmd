@@ -11,7 +11,7 @@ import {CommandFilePathBase} from "./base";
  * Returns true if the path exists and false if it doesn't
  */
 export class CommandFilePathExists extends CommandFilePathBase<boolean> {
-	async execute(): Promise<boolean> {
+	protected async _execute(): Promise<boolean> {
 		return pathExists(this.path);
 	}
 }
@@ -20,7 +20,7 @@ export class CommandFilePathExists extends CommandFilePathBase<boolean> {
  * Inverts the result of CommandFilePathExists
  */
 export class CommandFilePathNotExists extends CommandFilePathExists {
-	async execute(): Promise<boolean> {
-		return !(await super.execute());
+	protected async _execute(): Promise<boolean> {
+		return !(await pathExists(this.path));
 	}
 }

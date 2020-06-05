@@ -5,7 +5,7 @@
  */
 
 import * as fs from "fs-extra";
-import {CommandCopyPath} from "../../../../src/command/file/copy";
+import {CommandCopyPath} from "../../../../src/command";
 
 jest.mock("fs-extra");
 const fsMocked = fs as jest.Mocked<typeof fs>;
@@ -44,7 +44,8 @@ describe("command.file.copy", function() {
 				return instance.execute()
 					.then(result => {
 						expect(result).toBeUndefined();
-						expect(fsMocked.copy).toHaveBeenCalledWith("path-from", "path-to", undefined);
+						expect(fsMocked.copy)
+							.toHaveBeenCalledWith("path-from", "path-to", undefined);
 					});
 			});
 		});

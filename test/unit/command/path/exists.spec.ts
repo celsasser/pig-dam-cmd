@@ -4,10 +4,7 @@
  * @license MIT (see project's LICENSE file)
  */
 
-import {
-	CommandFilePathExists,
-	CommandFilePathNotExists
-} from "../../../../src/command/file/exists";
+import {CommandFilePathExists, CommandFilePathNotExists} from "../../../../src/command";
 
 describe("command.file.exists", function() {
 	describe("CommandFilePathExists", function() {
