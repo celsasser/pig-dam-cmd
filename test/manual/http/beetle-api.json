@@ -1,0 +1,249 @@
+{
+	"info": {
+		"description": "Test proxy responder: pig-dam-cmd.",
+		"execute": "<beetle>.js run beetle-api.json",
+		"repository": "https://github.com/celsasser/beetle"
+	},
+	"server": {
+		"port": 9000,
+		"protocol": "http"
+	},
+	"stubs": [
+		{
+			"actions": [
+				{
+					"type": "log"
+				},
+				{
+					"type": "reflect"
+				}
+			],
+			"route": {
+				"method": [
+					"delete",
+					"head",
+					"get",
+					"options",
+					"put",
+					"post"
+				],
+				"path": "/reflect"
+			}
+		},
+		{
+			"actions": [
+				{
+					"type": "log"
+				},
+				{
+					"response": {
+						"body": {
+							"address": {
+								"city": "NY",
+								"name": "Animal Haven",
+								"state": "New York",
+								"street": "200 Centre Street",
+								"zip": 10013
+							},
+							"name": "Animal Haven"
+						},
+						"contentType": "application/json",
+						"statusCode": 200
+					},
+					"type": "respond"
+				}
+			],
+			"route": {
+				"method": "get",
+				"path": "/shelter/json/success"
+			}
+		},
+		{
+			"actions": [
+				{
+					"type": "log"
+				},
+				{
+					"response": {
+						"body": {
+							"message": "shelter not found",
+							"status": "error"
+						},
+						"contentType": "application/json",
+						"statusCode": 404
+					},
+					"type": "respond"
+				}
+			],
+			"route": {
+				"method": "get",
+				"path": "/shelter/json/failure"
+			}
+		},
+		{
+			"actions": [
+				{
+					"type": "log"
+				},
+				{
+					"response": {
+						"body": "Animal Haven, 200 Centre Street, NY, New York, 10013",
+						"contentType": "application/text",
+						"statusCode": 200
+					},
+					"type": "respond"
+				}
+			],
+			"route": {
+				"method": "get",
+				"path": "/shelter/text/success"
+			}
+		},
+		{
+			"actions": [
+				{
+					"type": "log"
+				},
+				{
+					"response": {
+						"body": "Shelter not found",
+						"contentType": "application/text",
+						"statusCode": 404
+					},
+					"type": "respond"
+				}
+			],
+			"route": {
+				"method": "get",
+				"path": "/shelter/text/failure"
+			}
+		},
+		{
+			"actions": [
+				{
+					"type": "log"
+				},
+				{
+					"response": {
+						"body": {
+							"id": "urn:pet:cat:george"
+						},
+						"contentType": "application/json",
+						"statusCode": 200
+					},
+					"type": "respond"
+				}
+			],
+			"route": {
+				"method": [
+					"post",
+					"put"
+				],
+				"path": "/shelter/update/success"
+			}
+		},
+		{
+			"actions": [
+				{
+					"type": "log"
+				},
+				{
+					"response": {
+						"body": "unexpected error",
+						"contentType": "application/text",
+						"statusCode": 500
+					},
+					"type": "respond"
+				}
+			],
+			"route": {
+				"method": [
+					"post",
+					"put"
+				],
+				"path": "/shelter/update/failure"
+			}
+		},
+		{
+			"actions": [
+				{
+					"type": "log"
+				},
+				{
+					"response": {
+						"body": {
+							"message": "shelter not found",
+							"status": "error"
+						},
+						"contentType": "application/text",
+						"statusCode": 404
+					},
+					"type": "respond"
+				}
+			],
+			"route": {
+				"method": "delete",
+				"path": "/shelter/json/failure"
+			}
+		},
+		{
+			"actions": [
+				{
+					"type": "log"
+				},
+				{
+					"response": {
+						"body": {
+							"status": "success"
+						},
+						"contentType": "application/json",
+						"statusCode": 200
+					},
+					"type": "respond"
+				}
+			],
+			"route": {
+				"method": "delete",
+				"path": "/shelter/json/success"
+			}
+		},
+		{
+			"actions": [
+				{
+					"type": "log"
+				},
+				{
+					"response": {
+						"body": "could not find specified shelter",
+						"contentType": "application/text",
+						"statusCode": 404
+					},
+					"type": "respond"
+				}
+			],
+			"route": {
+				"method": "delete",
+				"path": "/shelter/text/failure"
+			}
+		},
+		{
+			"actions": [
+				{
+					"type": "log"
+				},
+				{
+					"response": {
+						"body": "shelter deleted",
+						"contentType": "application/text",
+						"statusCode": 200
+					},
+					"type": "respond"
+				}
+			],
+			"route": {
+				"method": "delete",
+				"path": "/shelter/text/success"
+			}
+		}
+	]
+}

@@ -45,6 +45,10 @@
 			"double",
 			"avoid-escape"
 		],
+		"semicolon": [
+			true,
+			"always"
+		],
 		"trailing-comma": {
 			"severity": "error"
 		},
