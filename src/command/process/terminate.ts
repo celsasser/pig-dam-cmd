@@ -5,7 +5,7 @@
  */
 
 import * as _ from "lodash";
-import {errorToDiagnosticString, LogBase, PigError} from "pig-dam-core";
+import {LogBase, PigError} from "pig-dam-core";
 import {CommandMetadataType, ShutdownProperties} from "../../types";
 import {CommandBase} from "../base";
 import {exitProcess} from "./shutdown";
@@ -55,10 +55,10 @@ export class CommandTerminalSignal extends CommandBase<void> {
 	 ********************/
 	protected async _execute(): Promise<void> {
 		process.addListener(this.signal, (): void => {
-			const message = errorToDiagnosticString(new PigError({
+			const error = new PigError({
 				message: `"${this.signal}" caught. Initiating shutdown`
-			}));
-			this.logger.error(message, {
+			});
+			this.logger.error(error, {
 				metadata: this.metadata,
 				moduleId: "pig-dam-cmd",
 				traceId: this.traceId

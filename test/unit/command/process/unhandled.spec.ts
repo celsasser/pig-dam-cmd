@@ -29,7 +29,7 @@ describe("command.process.unhandled", function() {
 
 		describe("_execute", function() {
 			it("should exit process on uncaught exception", function(done) {
-				const error = new Error();
+				const error = new Error("forced");
 				const logger = createStubbedLogger();
 				const shutdownProperties = createShutdownProperties();
 				const instance = new CommandUnhandledError({logger, shutdownProperties});

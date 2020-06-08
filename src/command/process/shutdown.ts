@@ -30,7 +30,7 @@ export function createShutdownProperties({
 }
 
 /**
- * Exits the process as per directions in `properties`
+ * Exits the process as per directions in <paam>properties</param>
  */
 export function exitProcess(properties: ShutdownProperties, cause: Error|NodeJS.Signals): void {
 	if(properties.callback) {

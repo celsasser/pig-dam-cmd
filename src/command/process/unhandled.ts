@@ -5,7 +5,7 @@
  */
 
 import * as _ from "lodash";
-import {errorToDiagnosticString, LogBase, PigError} from "pig-dam-core";
+import {LogBase, PigError} from "pig-dam-core";
 import {CommandMetadataType, ShutdownProperties} from "../../types";
 import {CommandBase} from "../base";
 import {exitProcess} from "./shutdown";
@@ -53,11 +53,11 @@ export class CommandUnhandledError extends CommandBase<void> {
 	 */
 	private setupUncaughtExceptionListener(): void {
 		process.addListener("uncaughtException", (error: Error): void => {
-			const message = errorToDiagnosticString(new PigError({
+			error = new PigError({
 				error,
 				message: `Caught uncaught exception. Initiating shutdown`
-			}));
-			this.logger.error(message, {
+			});
+			this.logger.error(error, {
 				metadata: this.metadata,
 				moduleId: "pig-dam-cmd",
 				traceId: this.traceId
@@ -71,11 +71,12 @@ export class CommandUnhandledError extends CommandBase<void> {
 	 */
 	private setupUnhandledRejectionListener(): void {
 		process.addListener("unhandledRejection", (reason: any): void => {
-			const message = errorToDiagnosticString(new PigError({
-				details: JSON.stringify(reason),
+			const error = new PigError({
+				// reason - "the object with which the promise was rejected (typically an Error object)"
+				error: reason,
 				message: `Caught unhandled promise rejection`
-			}));
-			this.logger.warn(message, {
+			});
+			this.logger.warn(error, {
 				metadata: this.metadata,
 				moduleId: "pig-dam-cmd",
 				traceId: this.traceId
