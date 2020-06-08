@@ -14,6 +14,10 @@ export * from "./file/path";
 export * from "./http/request/command";
 export * from "./http/request/factory";
 
+export * from "./process/shutdown";
+export * from "./process/terminate";
+export * from "./process/unhandled";
+
 export * from "./base";
 export * from "./parallel";
 export * from "./proxy";
