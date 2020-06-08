@@ -35,7 +35,7 @@ describe("command.parallel", function() {
 			const instance = new CommandParallelExecution({commands});
 			return expect(instance.execute())
 				.rejects
-				.toThrowError(`CommandParallelExecution.execute() failed - CommandProxy.execute() failed - ${defaultExecuteRejectValue}`);
+				.toThrowError(defaultExecuteRejectValue);
 		});
 	});
 });

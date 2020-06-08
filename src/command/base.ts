@@ -4,7 +4,7 @@
  * @license MIT (see project's LICENSE file)
  */
 
-import {getTypeName, PigError} from "pig-dam-core";
+import {PigError} from "pig-dam-core";
 import {createCommandUrn, createTraceUrn} from "../factory";
 import {CommandInterface, CommandMetadataType} from "../types";
 
@@ -57,9 +57,10 @@ export abstract class CommandBase<T> implements CommandInterface<T> {
 		try {
 			return await this._execute();
 		} catch(error) {
+			// note: all of our metadata will be picked up via PigError. So we wrap up the error, set
+			// the message to the error's message and let PigError and formatting do the rest.
 			throw new PigError({
 				error,
-				message: `${getTypeName(this)}.execute() failed - ${error.message}`,
 				metadata: this.metadata
 			});
 		}
