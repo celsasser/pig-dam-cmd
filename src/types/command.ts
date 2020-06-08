@@ -5,6 +5,9 @@
  */
 
 export type CommandExecuteType<T> = () => Promise<T>;
+export type CommandMetadataType = {
+	[key: string]: any
+};
 
 export interface CommandInterface<T> {
 	/**
@@ -21,7 +24,7 @@ export interface CommandInterface<T> {
 	 * Fundamental data that describes this object. To be included with logging and
 	 * as error details.  Should not include recursive references.
 	 */
-	metadata: object;
+	metadata: CommandMetadataType;
 
 	/**
 	 * Execute this command

@@ -5,6 +5,7 @@
  */
 
 import {readJson, writeJson} from "fs-extra";
+import {CommandMetadataType} from "../../types";
 import {CommandFilePathBase} from "./base";
 
 /**
@@ -35,7 +36,7 @@ export class CommandWriteJsonFile<T = any> extends CommandFilePathBase<void> {
 		this.object = object;
 	}
 
-	get metadata(): object {
+	get metadata(): CommandMetadataType {
 		return Object.assign(super.metadata, {
 			object: this.object
 		});

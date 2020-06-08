@@ -6,7 +6,7 @@
 
 import {getTypeName, PigError} from "pig-dam-core";
 import {createCommandUrn, createTraceUrn} from "../factory";
-import {CommandInterface} from "../types";
+import {CommandInterface, CommandMetadataType} from "../types";
 
 /**
  * Base class for commands. We do use interfaces so you don't have to inherit from
@@ -38,7 +38,7 @@ export abstract class CommandBase<T> implements CommandInterface<T> {
 	 * as error details.  Should not include recursive references.
 	 * @immutable
 	 */
-	public get metadata(): object {
+	public get metadata(): CommandMetadataType {
 		return {
 			id: this.id,
 			traceId: this.traceId
@@ -91,7 +91,7 @@ export abstract class CommandQueueBase<T> extends CommandBase<T[]> {
 		this.commands = commands;
 	}
 
-	get metadata(): object {
+	get metadata(): CommandMetadataType {
 		return Object.assign(super.metadata, {
 			commands: this.commands.map(command => command.metadata)
 		});

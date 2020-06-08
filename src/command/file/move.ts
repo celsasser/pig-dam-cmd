@@ -6,6 +6,7 @@
 
 import {ensureDir, move, MoveOptions, readdir} from "fs-extra";
 import {join as joinPath} from "path";
+import {CommandMetadataType} from "../../types";
 import {CommandBase} from "../base";
 
 /**
@@ -32,7 +33,7 @@ export class CommandMovePath extends CommandBase<void> {
 		this.pathTo = pathTo;
 	}
 
-	get metadata(): object {
+	get metadata(): CommandMetadataType {
 		return Object.assign(super.metadata, {
 			options: this.options,
 			pathFrom: this.pathFrom,
