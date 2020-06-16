@@ -47,12 +47,20 @@ describe("command.base", function() {
 		});
 
 		describe("execute", function() {
-			it("should run _execute", function() {
+			it("should run _execute and resolve with success", function() {
 				const instance = createInstance();
 				// @ts-ignore
 				instance._execute = jest.fn().mockResolvedValue("success");
 				expect(instance.execute())
 					.resolves.toEqual("success");
+			});
+
+			it("should run _execute and reject with failure", function() {
+				const instance = createInstance();
+				// @ts-ignore
+				instance._execute = jest.fn().mockRejectedValue(new Error("failed"));
+				expect(instance.execute())
+					.rejects.toThrowError("failed");
 			});
 		});
 	});

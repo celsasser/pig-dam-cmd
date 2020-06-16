@@ -1,11 +1,8 @@
-# DAM Pig: Command Library
+# Pig DAM: Command Library
 
 ## Overview
 
-Includes our command architecture. Allows one to create and queue up `Commands`.
+Includes our command architecture. Command are consolidated blobs of functionality that are executed atomically.  
 
 ## Quick Start
 
-* [configure](src/configuration.js) the library. We pulled commands out of our applications. Within our apps we had the advantage of 
-exposing our command architecture to the application configuration. We loose that here. This guy facilitates a subset of the power of 
-application configuration. He manages a single configuration that you the user of this lib **should** configure.

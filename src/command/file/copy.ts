@@ -5,6 +5,7 @@
  */
 
 import {copy, CopyOptions} from "fs-extra";
+import {CommandMetadataType} from "../../types";
 import {CommandBase} from "../base";
 
 /**
@@ -31,7 +32,7 @@ export class CommandCopyPath extends CommandBase<void> {
 		this.pathTo = pathTo;
 	}
 
-	get metadata(): object {
+	get metadata(): CommandMetadataType {
 		return Object.assign(super.metadata, {
 			options: this.options,
 			pathFrom: this.pathFrom,

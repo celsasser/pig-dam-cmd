@@ -4,6 +4,7 @@
  * @license MIT (see project's LICENSE file)
  */
 
+import {CommandMetadataType} from "../../types";
 import {CommandBase} from "../base";
 
 /**
@@ -24,7 +25,7 @@ export abstract class CommandFilePathBase<T> extends CommandBase<T> {
 		this.path = path;
 	}
 
-	get metadata(): object {
+	get metadata(): CommandMetadataType {
 		return Object.assign(super.metadata, {
 			path: this.path
 		});

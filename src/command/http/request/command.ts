@@ -6,7 +6,12 @@
 
 import * as assert from "assert";
 import axios from "axios";
-import {HttpRequest, HttpResponse, HttpResponseType} from "../../../types";
+import {
+	CommandMetadataType,
+	HttpRequest,
+	HttpResponse,
+	HttpResponseType
+} from "../../../types";
 import {CommandBase} from "../../base";
 
 /**
@@ -45,7 +50,7 @@ export class CommandHttpRequest<T = any> extends CommandBase<HttpResponse<T>> {
 	 * as error details.  Should not include recursive references.
 	 * @immutable
 	 */
-	get metadata(): object {
+	get metadata(): CommandMetadataType {
 		return Object.assign(super.metadata, {
 			request: this.request
 		});
