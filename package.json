@@ -1,6 +1,7 @@
 {
 	"author": "Curt Elsasser",
 	"dependencies": {
+		"@types/fs-extra": "9.0.1",
 		"axios": "0.19.2",
 		"fs-extra": "9.0.1",
 		"lodash": "4.17.15",
@@ -8,7 +9,6 @@
 	},
 	"description": "Pig DAM's command architecture.",
 	"devDependencies": {
-		"@types/fs-extra": "9.0.1",
 		"@types/jest": "25.2.3",
 		"@types/lodash": "4.14.155",
 		"@types/node": "12.12.6",
@@ -47,5 +47,5 @@
 		"test:unit": "jest ./test/unit"
 	},
 	"types": "dist/index",
-	"version": "0.0.2"
+	"version": "0.0.3"
 }
