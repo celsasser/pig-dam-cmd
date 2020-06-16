@@ -5,13 +5,13 @@
  */
 
 import {CommandUnhandledError, createShutdownProperties} from "../../../../src/command";
-import {createStubbedLogger} from "../../../support/factory/logger";
+import {createTestLogger} from "../../../support/factory/logger";
 
 describe("command.process.unhandled", function() {
 	describe("CommandUnhandledError", function() {
 		describe("constructor", function() {
 			it("should properly create an instance", function() {
-				const logger = createStubbedLogger();
+				const logger = createTestLogger();
 				const shutdownProperties = createShutdownProperties();
 				const instance = new CommandUnhandledError({
 					id: "urn:dam:command:id",
@@ -30,7 +30,7 @@ describe("command.process.unhandled", function() {
 		describe("_execute", function() {
 			it("should exit process on uncaught exception", function(done) {
 				const error = new Error("forced");
-				const logger = createStubbedLogger();
+				const logger = createTestLogger();
 				const shutdownProperties = createShutdownProperties();
 				const instance = new CommandUnhandledError({logger, shutdownProperties});
 				// @ts-ignore
@@ -44,7 +44,7 @@ describe("command.process.unhandled", function() {
 			});
 
 			it("should log warning on unhandled rejections", function() {
-				const logger = createStubbedLogger();
+				const logger = createTestLogger();
 				const shutdownProperties = createShutdownProperties();
 				const instance = new CommandUnhandledError({logger, shutdownProperties});
 				instance.execute();

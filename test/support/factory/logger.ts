@@ -9,7 +9,7 @@ import {LogBase, LogConsole} from "pig-dam-core";
 /**
  * Creates a stubbed logger
  */
-export function createStubbedLogger(): LogBase {
+export function createTestLogger(): LogBase {
 	const logger = new LogConsole({
 		applicationId: "urn:dam:application:id",
 		environmentId: "urn:dam:environment:id"

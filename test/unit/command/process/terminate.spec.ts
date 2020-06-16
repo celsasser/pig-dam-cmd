@@ -10,13 +10,13 @@ import {
 	CommandTerminalTerminateSignal,
 	createShutdownProperties
 } from "../../../../src/command";
-import {createStubbedLogger} from "../../../support/factory/logger";
+import {createTestLogger} from "../../../support/factory/logger";
 
 describe("command.process.terminate", function() {
 	describe("CommandTerminalSignal", function() {
 		describe("_execute", function() {
 			it("should setup an event listener and log and exit the process on signal", function(done) {
-				const logger = createStubbedLogger();
+				const logger = createTestLogger();
 				const shutdownProperties = createShutdownProperties();
 				const instance = new CommandTerminalInterruptSignal({
 					logger,
@@ -38,7 +38,7 @@ describe("command.process.terminate", function() {
 	describe("CommandTerminalInterruptSignal", function() {
 		describe("constructor", function() {
 			it("should properly create an instance", function() {
-				const logger = createStubbedLogger();
+				const logger = createTestLogger();
 				const shutdownProperties = createShutdownProperties();
 				const instance = new CommandTerminalInterruptSignal({
 					id: "urn:dam:command:id",
@@ -59,7 +59,7 @@ describe("command.process.terminate", function() {
 	describe("CommandTerminalQuitSignal", function() {
 		describe("constructor", function() {
 			it("should properly create an instance", function() {
-				const logger = createStubbedLogger();
+				const logger = createTestLogger();
 				const shutdownProperties = createShutdownProperties();
 				const instance = new CommandTerminalQuitSignal({
 					id: "urn:dam:command:id",
@@ -80,7 +80,7 @@ describe("command.process.terminate", function() {
 	describe("CommandTerminalTerminateSignal", function() {
 		describe("constructor", function() {
 			it("should properly create an instance", function() {
-				const logger = createStubbedLogger();
+				const logger = createTestLogger();
 				const shutdownProperties = createShutdownProperties();
 				const instance = new CommandTerminalTerminateSignal({
 					id: "urn:dam:command:id",
