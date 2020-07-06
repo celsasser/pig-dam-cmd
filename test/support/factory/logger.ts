@@ -4,12 +4,12 @@
  * @license MIT (see project's LICENSE file)
  */
 
-import {LogBase, LogConsole} from "pig-dam-core";
+import {ILog, LogConsole} from "pig-dam-core";
 
 /**
  * Creates a stubbed logger
  */
-export function createTestLogger(): LogBase {
+export function createTestLogger(): ILog {
 	const logger = new LogConsole({
 		applicationId: "urn:dam:application:id",
 		environmentId: "urn:dam:environment:id"

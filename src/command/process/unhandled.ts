@@ -5,7 +5,7 @@
  */
 
 import * as _ from "lodash";
-import {LogBase, PigError} from "pig-dam-core";
+import {ILog, PigError} from "pig-dam-core";
 import {CommandMetadataType, ShutdownProperties} from "../../types";
 import {CommandBase} from "../base";
 import {exitProcess} from "./shutdown";
@@ -15,7 +15,7 @@ import {exitProcess} from "./shutdown";
  */
 export class CommandUnhandledError extends CommandBase<void> {
 	public readonly shutdownProperties: ShutdownProperties;
-	private readonly logger: LogBase;
+	private readonly logger: ILog;
 
 	/********************
 	 * Public Interface
@@ -25,7 +25,7 @@ export class CommandUnhandledError extends CommandBase<void> {
 	 */
 	constructor({id, logger, shutdownProperties, traceId}: {
 		id?: string,
-		logger: LogBase,
+		logger: ILog,
 		shutdownProperties: ShutdownProperties,
 		traceId?: string
 	}) {

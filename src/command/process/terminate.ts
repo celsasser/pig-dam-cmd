@@ -5,7 +5,7 @@
  */
 
 import * as _ from "lodash";
-import {LogBase, PigError} from "pig-dam-core";
+import {ILog, PigError} from "pig-dam-core";
 import {CommandMetadataType, ShutdownProperties} from "../../types";
 import {CommandBase} from "../base";
 import {exitProcess} from "./shutdown";
@@ -22,7 +22,7 @@ export class CommandTerminalSignal extends CommandBase<void> {
 	 * Signal to listen for
 	 */
 	public readonly signal: NodeJS.Signals;
-	private readonly logger: LogBase;
+	private readonly logger: ILog;
 
 	/********************
 	 * Public Interface
@@ -32,7 +32,7 @@ export class CommandTerminalSignal extends CommandBase<void> {
 	 */
 	constructor({id, logger, shutdownProperties, signal, traceId}: {
 		id?: string,
-		logger: LogBase,
+		logger: ILog,
 		shutdownProperties: ShutdownProperties,
 		signal: NodeJS.Signals,
 		traceId?: string
@@ -77,7 +77,7 @@ export class CommandTerminalInterruptSignal extends CommandTerminalSignal {
 	 */
 	constructor({id, logger, shutdownProperties, traceId}: {
 		id?: string,
-		logger: LogBase,
+		logger: ILog,
 		shutdownProperties: ShutdownProperties,
 		traceId?: string
 	}) {
@@ -100,7 +100,7 @@ export class CommandTerminalQuitSignal extends CommandTerminalSignal {
 	 */
 	constructor({id, logger, shutdownProperties, traceId}: {
 		id?: string,
-		logger: LogBase,
+		logger: ILog,
 		shutdownProperties: ShutdownProperties,
 		traceId?: string
 	}) {
@@ -123,7 +123,7 @@ export class CommandTerminalTerminateSignal extends CommandTerminalSignal {
 	 */
 	constructor({id, logger, shutdownProperties, traceId}: {
 		id?: string,
-		logger: LogBase,
+		logger: ILog,
 		shutdownProperties: ShutdownProperties,
 		traceId?: string
 	}) {
